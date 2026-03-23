@@ -1,40 +1,40 @@
 # nexcore-brain
 
-Working memory engine for Claude Code. Manages the persistence, versioning, and recovery of session context, artifacts, and implicit learning patterns.
+Part of the [NexVigilant](https://nexvigilant.com) pharmacovigilance platform.
 
-## Intent
-To provide AI agents with a durable, versioned "working memory" that persists across sessions. It enables context recovery, structured task tracking, and automatic pattern assimilation through implicit learning.
+## About NexVigilant
 
-## T1 Grounding (Lex Primitiva)
-Dominant Primitives:
-- **π (Persistence)**: The primary primitive for durable storage of sessions and artifacts.
-- **σ (Sequence)**: Versioning of artifacts (`.resolved.N`) and the time-series nature of session history.
-- **μ (Mapping)**: Implicit knowledge mapping and project-to-session association.
-- **ς (State)**: Management of active session state and "Bathroom Lock" coordination.
+NexVigilant makes pharmacovigilance accessible. We build open computation tools for drug safety signal detection, causality assessment, and regulatory intelligence — because patient safety knowledge should be available to everyone willing to learn.
 
-## Core Components
-1. **Session Management**: Lifecycle control for AI agent working contexts.
-2. **Artifact Versioning**: Secure, immutable snapshots of tasks, plans, and walkthroughs.
-3. **Implicit Learning**: Background tracking of user/agent interaction patterns.
-4. **Bathroom Lock**: Cryptographic coordination mechanism to prevent concurrent write collisions on artifacts.
+**Live tools:** [mcp.nexvigilant.com](https://mcp.nexvigilant.com) — 193 MCP tools for AI-powered pharmacovigilance, free to connect.
 
-## SOPs for Use
-### Creating a new Session
-```rust
-use nexcore_brain::session::BrainSession;
-let session = BrainSession::create_with_options(Some("my-project".into()), None, Some("Task description".into()))?;
+## Installation
+
+```toml
+[dependencies]
+nexcore-brain = { git = "https://github.com/nexvigilant/nexcore-brain" }
 ```
 
-### Saving and Resolving an Artifact
-1. Save the current state: `session.save_artifact(&artifact)?;`
-2. Create an immutable snapshot: `session.resolve_artifact("task.md")?;`
-3. This creates `task.md.resolved` and `task.md.resolved.N` (where N is the new version).
-
-## Directory Structure
-Stored in `~/.claude/brain/`:
-- `sessions/`: Individual session directories.
-- `index.json`: Global session registry.
-- `implicit/`: Persisted implicit learning patterns.
+> **Note:** This crate was developed as part of the [nexcore](https://github.com/nexvigilant) workspace. Some dependencies may reference workspace-level configuration. See individual `Cargo.toml` for details.
 
 ## License
-Proprietary. Copyright (c) 2026 NexVigilant LLC. All Rights Reserved.
+
+**Personal, non-commercial use only.** See [LICENSE](LICENSE) for full terms.
+
+Organizations of any kind must have explicit written permission for use.
+Contact [matthew@nexvigilant.com](mailto:matthew@nexvigilant.com) for licensing.
+
+## Contributing
+
+Contributions are welcome under the following terms:
+
+1. **Fork & PR.** Fork this repository, make your changes, and submit a pull request.
+2. **CLA.** By submitting a pull request, you agree that your contributions become the property of NexVigilant LLC under the same license terms.
+3. **Code quality.** All Rust code must pass `cargo clippy -- -D warnings` and `cargo fmt --check`.
+4. **Tests.** New functionality should include tests. Run `cargo test --lib` before submitting.
+
+For questions or discussion, open an issue or reach out at [matthew@nexvigilant.com](mailto:matthew@nexvigilant.com).
+
+---
+
+Built by [NexVigilant LLC](https://nexvigilant.com) — Pharmacovigilance for NexVigilants.
