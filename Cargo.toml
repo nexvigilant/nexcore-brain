@@ -1,0 +1,71 @@
+
+[package]
+name = "nexcore-brain"
+version = "1.0.0"
+edition = "2024"
+authors = ["NexVigilant Team <team@nexvigilant.com>"]
+license = "LicenseRef-Proprietary"
+repository = "https://github.com/nexvigilant/nexcore"
+rust-version = "1.85"
+description = "Antigravity-style brain system for Claude Code - working memory, artifact versioning, and content-addressable code tracking"
+keywords = ["claude-code", "brain", "memory", "versioning", "artifacts"]
+categories = ["development-tools", "command-line-utilities"]
+
+[[bin]]
+name = "brain"
+path = "src/main.rs"
+
+[dependencies]
+# Serialization
+serde = { version = "1.0.204", features = ["derive"] }
+serde_json = { version = "1.0.120" }
+
+# Error handling - uses own BrainError (manual impl, zero deps)
+
+# Date/time and UUIDs
+nexcore-chrono = { workspace = true }
+nexcore-id = { version = "0.1.0", path = "../nexcore-id", registry = "nexcore", features = ["serde"] }
+
+# Cryptographic hashing for content-addressable storage
+nexcore-hash = { workspace = true }
+nexcore-codec = { version = "0.1.0", path = "../nexcore-codec", registry = "nexcore" }
+
+# File system operations
+nexcore-fs = { workspace = true }
+
+# Foundation primitives (BathroomLock for file write protection)
+nexcore-constants = { version = "1.0.0", path = "../nexcore-constants", registry = "nexcore" }
+
+# Tracing for diagnostics
+tracing = { version = "0.1.40" }
+
+# Persistent SQLite storage (dual-write alongside JSON files)
+nexcore-db = { version = "1.0.0", path = "../nexcore-db", registry = "nexcore" }
+
+# Amplitude growth learning model
+nexcore-synapse = { version = "1.0.0", path = "../nexcore-synapse", registry = "nexcore" }
+
+# Lex Primitiva grounding
+nexcore-lex-primitiva = { version = "0.1.0", path = "../nexcore-lex-primitiva", registry = "nexcore" }
+
+# NMD surveillance bridge (learning events → implicit knowledge)
+nexcore-immunity = { version = "0.1.0", path = "../nexcore-immunity", registry = "nexcore" }
+
+# Insight trait adapter
+nexcore-insight = { version = "0.1.0", path = "../nexcore-insight", registry = "nexcore", optional = true }
+
+# CLI
+clap = { version = "4.5.11", features = ["derive", "cargo", "env"] }
+
+[features]
+default = ["insight"]
+insight = ["dep:nexcore-insight"]
+
+[dev-dependencies]
+tempfile = { version = "3.10.1" }
+proptest = "1.6"
+nexcore-error = { workspace = true }
+
+
+[lints]
+workspace = true
